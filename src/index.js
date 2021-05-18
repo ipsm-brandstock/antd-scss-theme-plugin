@@ -42,27 +42,22 @@ class AntdScssThemePlugin {
 	 * all of antd's theme and color variables from the SCSS theme file.
 	 * antd.
 	 * @param {(string|Object)} config - A webpack loader config.
-	 * @return {Object} Loader config using the wrapped loader instead of the original.
+	 * @return {Object} Path to a custom loader instead of the original.
 	 */
-	static themify(config) {
-		const { loader, options = {} } = typeof config === 'string' ? { loader: config } : config;
+	static themify(loader) {
 		let overloadedLoader;
 		switch (loader) {
 			case 'sass-loader':
-				overloadedLoader = require.resolve('./antdSassLoader.js');
+				overloadedLoader = 'ipsm-scss-theme-plugin/build/dist/lib/antdSassLoader.js';
 				break;
 			case 'less-loader':
-				overloadedLoader = require.resolve('./antdLessLoader.js');
+				overloadedLoader = 'ipsm-scss-theme-plugin/build/dist/lib/antdLessLoader.js';
 				break;
 			default:
 				overloadedLoader = loader;
 				break;
 		}
-
-		return {
-			loader: overloadedLoader,
-			options,
-		};
+		return overloadedLoader;
 	}
 }
 
